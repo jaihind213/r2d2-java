@@ -11,13 +11,12 @@ import r2d2.lifeCycle.Lifecycle;
  */
 public interface Messenger extends Lifecycle {
     /**
-     * send message to destination
+     * send message to destination. Destination details are passed on to Messenger via config
      * @param message
-     * @param topicName
      * @return integer values represented in MessageDispatchCodes enum
      * @throws DispatchException
      */
-    public void dispatch(String message, String topicName) throws DispatchException;
+    public void dispatch(String message) throws DispatchException;
 
     /**
      * ping method to check if messenger can reach its destination

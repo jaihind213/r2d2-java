@@ -1,8 +1,8 @@
 package r2d2.config;
 
-import r2d2.config.ConfigConstants;
 import r2d2.constants.MessengerType;
 import r2d2.exception.ConfigException;
+import r2d2.msg.DestinationType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,12 @@ import java.util.Map;
  * parses a line (string) and extracts config.
  */
 public class LineConfigParser {
-
+    /**
+     * extracts key/value configs from a line.
+     * @param line config line
+     * @return Map of key as string and value as string
+     * @throws ConfigException if config is invalid
+     */
     public static Map<String,String> extract(String line){
 
         Map<String,String> config = new HashMap<String, String>();
@@ -34,13 +39,15 @@ public class LineConfigParser {
             }
             config.put(keyValue[0], keyValue[1]);
         }
-        isMessengerTypeSpecified(config);
+        isMessengerAndDestinationDetailSpecified(config);
         printConfig(config);
         return config;
     }
 
-    private static void isMessengerTypeSpecified(Map<String,String> config){
+    private static void isMessengerAndDestinationDetailSpecified(Map<String, String> config){
         String type =config.get(ConfigConstants.type);
+        String destinationType =config.get(ConfigConstants.destinationType);
+        String destinationName =config.get(ConfigConstants.destinationName);
 
         if(type == null || type.isEmpty()){
           throw new ConfigException("Messenger type not specified in config string");
@@ -50,6 +57,20 @@ public class LineConfigParser {
         } catch (IllegalArgumentException e) {
             throw new ConfigException("Messenger type specified is invalid, in config string");
         }
+
+        if(destinationType == null || destinationType.isEmpty()){
+            throw new ConfigException("Destination type not specified in config string");
+        }
+        try {
+            DestinationType.valueOf(destinationType);
+        } catch (IllegalArgumentException e) {
+            throw new ConfigException("Destination type specified is invalid, in config string");
+        }
+
+        if(destinationName == null || destinationName.isEmpty()){
+            throw new ConfigException("Destination name not specified in config string");
+        }
+
     }
 
     private static void printConfig(Map<String,String> config){

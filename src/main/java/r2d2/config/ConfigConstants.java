@@ -23,6 +23,9 @@ public class ConfigConstants {
     public static final String config_tuple_delimeter = ";";
 
 
-    public static final String type = "type";
+    public static final String type = "producer_type"; //type of producer/messenger
+
+    public static final String destinationType = "dest_type"; //type of DESTINATION.
+    public static final String destinationName = "dest_name"; //name of DESTINATION.
 
 }

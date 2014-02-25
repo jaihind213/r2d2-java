@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import r2d2.BaseTest;
 import r2d2.constants.MessengerType;
 import r2d2.exception.ConfigException;
+import r2d2.msg.DestinationType;
 
 import java.util.Map;
 
@@ -23,11 +24,13 @@ public class LineConfigParserTest extends BaseTest{
                                + tuple_delim   +
                             "key2"+ delim + "value2"
                                 + tuple_delim +
-                            ConfigConstants.type+ delim + MessengerType.KAFKA.toString();
+                            ConfigConstants.type+ delim + MessengerType.KAFKA.toString()+ tuple_delim+
+                            ConfigConstants.destinationType+ delim + DestinationType.QUEUE.toString()+ tuple_delim+
+                            ConfigConstants.destinationName + delim+"testing";
         printLineConfig(lineConfig);
         try {
             Map <String,String> config = LineConfigParser.extract(lineConfig);
-            assertEquals(3, config.size());
+            assertEquals(5, config.size());
         } catch (Throwable e) {
             e.printStackTrace();
             fail();
@@ -35,21 +38,69 @@ public class LineConfigParserTest extends BaseTest{
 
     }
 
-    public void testForConfigWithoutType() throws Exception {
+    public void testForConfigWithoutMessengerType() throws Exception {
         String lineConfig = "key1"+ delim + "value1"
                 + tuple_delim   +
-                "key2"+ delim + "value2";
+                "key2"+ delim + "value2"
+                +tuple_delim+
+                ConfigConstants.destinationType+ delim + "TOPIC"
+                +tuple_delim+
+                ConfigConstants.destinationName+ delim + "name";
         printLineConfig(lineConfig);
         try {
             Map <String,String> config = LineConfigParser.extract(lineConfig);
-            fail("test should not pass as type is not there in config string");
+            fail("test should not pass as Messenger type is not there in config string");
         } catch (ConfigException testPassed) {
+            testPassed.printStackTrace();
         } catch (Throwable failed) {
             failed.printStackTrace();
             fail("expecting ConfigException for test");
         }
 
     }
+
+    public void testForConfigWithoutDestinationType() throws Exception {
+        String lineConfig = "key1"+ delim + "value1"
+                + tuple_delim   +
+                "key2"+ delim + "value2"
+                +tuple_delim+
+                ConfigConstants.type+ delim + "BLACKHOLE"
+                +tuple_delim+
+                ConfigConstants.destinationName+ delim + "name";
+        printLineConfig(lineConfig);
+        try {
+            Map <String,String> config = LineConfigParser.extract(lineConfig);
+            fail("test should not pass as Destination type is not there in config string");
+        } catch (ConfigException testPassed) {
+            testPassed.printStackTrace();
+        } catch (Throwable failed) {
+            failed.printStackTrace();
+            fail("expecting ConfigException for test");
+        }
+
+    }
+
+    public void testForConfigWithoutDestinationName() throws Exception {
+        String lineConfig = "key1"+ delim + "value1"
+                + tuple_delim   +
+                "key2"+ delim + "value2"
+                +tuple_delim+
+                ConfigConstants.type+ delim + "BLACKHOLE"
+                +tuple_delim+
+                ConfigConstants.destinationType+ delim + "TOPIC";
+        printLineConfig(lineConfig);
+        try {
+            Map <String,String> config = LineConfigParser.extract(lineConfig);
+            fail("test should not pass as Destination name is not there in config string");
+        } catch (ConfigException testPassed) {
+            testPassed.printStackTrace();
+        } catch (Throwable failed) {
+            failed.printStackTrace();
+            fail("expecting ConfigException for test");
+        }
+
+    }
+
 
     public void testForMalformedConfigWithIncompleteTuple() throws Exception {
         String lineConfig = "ImproperKey1" +delim
