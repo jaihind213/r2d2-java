@@ -16,6 +16,8 @@ public abstract class AbstractMessenger {
 
     protected Map<String,String> config;
 
+    protected boolean initialized = false;
+
     protected Destination destination;
 
     protected AbstractMessenger(Map<String, String> config) {

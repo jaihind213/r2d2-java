@@ -146,9 +146,6 @@ public class LineConfigParserTest extends BaseTest{
         }
 
     }
-    private void printLineConfig(String config){
-        System.out.println("config given was "+config);
-    }
 
     public void testExtraTupleDelimiterInTuple_1() throws Exception {
         String lineConfig = "key1" +delim +"value1"
@@ -162,5 +159,9 @@ public class LineConfigParserTest extends BaseTest{
         } catch (ConfigException testPassed) {
         }
 
+    }
+
+    private void printLineConfig(String config){
+        System.out.println("config given was "+config);
     }
 }

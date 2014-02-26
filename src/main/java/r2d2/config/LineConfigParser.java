@@ -5,7 +5,9 @@ import r2d2.exception.ConfigException;
 import r2d2.msg.DestinationType;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
