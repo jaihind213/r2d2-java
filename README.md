@@ -25,7 +25,7 @@ Sample implmentations of Messengers:
 
 
 To implement an interface to a message queue like kafka, 
-you need to extend `AbstractMessenger` & implement the 'Messenger' interface then register it as an 'MessengerType' enum value.
+you need to extend `AbstractMessenger` & then register it as an 'MessengerType' enum value.
 
 refer to classes `ConsoleMessenger.java` & `MessengerType.java` for an example.
 
