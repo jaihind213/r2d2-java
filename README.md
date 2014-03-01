@@ -14,6 +14,12 @@ i.e. when an insert statement occurs on a MySQL table with R2D2 storage engine, 
 uses this library to instantiate a 'Messenger' object. The payload provided to the insert statement
 is passed on to the 'Messenger' object which dispatches the message to the message queue.
 
+Design:
+-------
+https://drive.google.com/file/d/0B71-jD__Xq3qVWZRVHhkb2l5MEk/edit?usp=sharing
+
+PLEASE ZOOM INTO THE IMAGE.
+
 Sample implmentations of Messengers:
 -----------------------------------
 
@@ -21,8 +27,14 @@ Sample implmentations of Messengers:
  
 (2) CONSOLE - produces to console refer `ConsoleMessenger.java`
 
-(3) KAFKA(todo)
+(3) KAFKA(can be done)
 
+(4) HTTP (can be done)
+
+(5) active qm (can be done)
+
+The more implementations we have, the 'mysql r2d2 storage engine' has the ability to deliver messages
+to different type of destinations.
 
 To implement an interface to a message queue like kafka, 
 you need to extend `AbstractMessenger` & then register it as an 'MessengerType' enum value.
@@ -45,6 +57,6 @@ The jar 'r2d2-java.jar' is created in the target folder.
 Next steps:
 -----------
 
-add the mysql variable `r2d2_jvm_arguments_var="-Djava.class.path=<path_to_r2d2-java.jar>"` to my.cnf
-
 get the storage engine set up in MySQL -> https://github.com/jaihind213/mysql-r2d2/blob/master/README.md
+
+then add the mysql variable `r2d2_jvm_arguments_var="-Djava.class.path=<path_to_r2d2-java.jar>"` to my.cnf
