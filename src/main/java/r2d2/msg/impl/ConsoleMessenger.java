@@ -2,12 +2,9 @@ package r2d2.msg.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import r2d2.config.ConfigConstants;
-import r2d2.constants.MessageDispatchCodes;
+import r2d2.constants.MessengerType;
 import r2d2.exception.DispatchException;
 import r2d2.exception.LifeCycleException;
-import r2d2.msg.Destination;
-import r2d2.msg.DestinationType;
 import r2d2.msg.Messenger;
 
 import java.util.Map;
@@ -18,17 +15,18 @@ import java.util.Map;
  * Date: 16/02/14
  * Time: 11:43 PM
  */
-public class BlackHoleProducer extends AbstractMessenger implements Messenger{
+public class ConsoleMessenger extends AbstractMessenger{
 
-    private static Logger logger = LoggerFactory.getLogger(BlackHoleProducer.class);
+    private static Logger logger = LoggerFactory.getLogger(ConsoleMessenger.class);
 
-    public BlackHoleProducer(Map<String,String> config) {
+    public ConsoleMessenger(Map<String, String> config) {
         super(config);
+        this.type= MessengerType.CONSOLE;
     }
 
     @Override
     public void dispatch(String message) throws DispatchException {
-        logger.info("BLACK HOLE PRODUCER sending message: "+message+" ,destination: "+destination.getName()+", hashcode:"+this.hashCode());
+        logger.info("CONSOLE MESSENGER sending message: "+message+" ,destination: "+destination.getName()+", hashcode:"+this.hashCode());
     }
 
     @Override
@@ -38,11 +36,11 @@ public class BlackHoleProducer extends AbstractMessenger implements Messenger{
 
     @Override
     public void start() throws LifeCycleException {
-        logger.info("Started blackhole logger.");
+        logger.info("Started {} messenger.",this.getClass().toString());
     }
 
     @Override
     public void stop() throws LifeCycleException {
-        logger.info("Stopped blackhole logger.");
+        logger.info("Stopped {} messenger.",this.getClass().toString());
     }
 }

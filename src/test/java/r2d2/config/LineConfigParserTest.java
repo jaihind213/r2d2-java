@@ -24,7 +24,7 @@ public class LineConfigParserTest extends BaseTest{
                                + tuple_delim   +
                             "key2"+ delim + "value2"
                                 + tuple_delim +
-                            ConfigConstants.type+ delim + MessengerType.KAFKA.toString()+ tuple_delim+
+                            ConfigConstants.type+ delim + MessengerType.CONSOLE.toString()+ tuple_delim+
                             ConfigConstants.destinationType+ delim + DestinationType.QUEUE.toString()+ tuple_delim+
                             ConfigConstants.destinationName + delim+"testing";
         printLineConfig(lineConfig);
@@ -64,7 +64,7 @@ public class LineConfigParserTest extends BaseTest{
                 + tuple_delim   +
                 "key2"+ delim + "value2"
                 +tuple_delim+
-                ConfigConstants.type+ delim + "BLACKHOLE"
+                ConfigConstants.type+ delim + "CONSOLE"
                 +tuple_delim+
                 ConfigConstants.destinationName+ delim + "name";
         printLineConfig(lineConfig);
@@ -85,7 +85,7 @@ public class LineConfigParserTest extends BaseTest{
                 + tuple_delim   +
                 "key2"+ delim + "value2"
                 +tuple_delim+
-                ConfigConstants.type+ delim + "BLACKHOLE"
+                ConfigConstants.type+ delim + "CONSOLE"
                 +tuple_delim+
                 ConfigConstants.destinationType+ delim + "TOPIC";
         printLineConfig(lineConfig);
@@ -119,7 +119,7 @@ public class LineConfigParserTest extends BaseTest{
         String lineConfig = "key1" +delim +"value1"+ delim  // <--- this is the extra delim
                 + tuple_delim   +
                 "key2"+ delim + "value2"+
-                tuple_delim+ ConfigConstants.type+ delim + MessengerType.KAFKA.toString();
+                tuple_delim+ ConfigConstants.type+ delim + MessengerType.CONSOLE.toString();
         System.out.println("This test should fail as you have not taken care of this edge case!");
         printLineConfig(lineConfig);
 
@@ -137,7 +137,7 @@ public class LineConfigParserTest extends BaseTest{
         String lineConfig = "key1" +delim +delim+"value1"  // <--- this is the extra delim
                 + tuple_delim   +
                 "key2"+ delim + "value2"+
-                tuple_delim+ ConfigConstants.type+ delim + MessengerType.KAFKA.toString();
+                tuple_delim+ ConfigConstants.type+ delim + MessengerType.CONSOLE.toString();
         printLineConfig(lineConfig);
         try {
             Map <String,String> config = LineConfigParser.extract(lineConfig);
@@ -151,7 +151,7 @@ public class LineConfigParserTest extends BaseTest{
         String lineConfig = "key1" +delim +"value1"
                 + tuple_delim   +   tuple_delim + // <--- this is the extra delim
                 "key2"+ delim + "value2"+
-                tuple_delim+ ConfigConstants.type+ delim + MessengerType.KAFKA.toString();
+                tuple_delim+ ConfigConstants.type+ delim + MessengerType.CONSOLE.toString();
         printLineConfig(lineConfig);
         try {
             Map <String,String> config = LineConfigParser.extract(lineConfig);

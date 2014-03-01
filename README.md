@@ -17,12 +17,17 @@ is passed on to the 'Messenger' object which dispatches the message to the messa
 Sample implmentations of Messengers:
 -----------------------------------
 
-(1) BLACKHOLE - produces a message to a blackhole refer `BlackHoleProducer.java` 
-(2) KAFKA(todo)
+(1) BLACKHOLE - produces a message to a blackhole refer `BlackholeProducer.java` 
+ 
+(2) CONSOLE - produces to console refer `ConsoleMessenger.java`
+
+(3) KAFKA(todo)
 
 
-To implement an interface to a message queue like kafka, you need to implement the 'Messenger' interface and register it as an 'MessengerType' enum value.
-refer to class `BlackHoleProducer.java` for an example.
+To implement an interface to a message queue like kafka, 
+you need to extend `AbstractMessenger` & implement the 'Messenger' interface then register it as an 'MessengerType' enum value.
+
+refer to classes `ConsoleMessenger.java` & `MessengerType.java` for an example.
 
 compile the r2d2-java project 
 
@@ -30,7 +35,10 @@ How to compile:
 ---------------
 
 mvn clean compile;
-mvn package;
+
+mvn test;
+
+mvn package; #create the jar
 
 The jar 'r2d2-java.jar' is created in the target folder.
 

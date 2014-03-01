@@ -6,7 +6,8 @@ import r2d2.config.ConfigConstants;
 import r2d2.config.LineConfigParser;
 import r2d2.constants.MessengerType;
 import r2d2.exception.LifeCycleException;
-import r2d2.msg.impl.BlackHoleProducer;
+import r2d2.msg.impl.BlackholeMessenger;
+import r2d2.msg.impl.ConsoleMessenger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,16 +36,15 @@ public class MessengerFactory {
 
         Map<String,String> config = LineConfigParser.extract(lineConfig);
 
-        switch (MessengerType.valueOf(config.get(ConfigConstants.type))){
-            case BLACKHOLE:
-                messenger = new BlackHoleProducer(config);
-                break;
-            default:
-                logger.info("Could not find requested logger with type: "+config.get(ConfigConstants.type)+". returning blackhole logger as default.");
-                messenger = new BlackHoleProducer(config);
-                break;
+        try {
+            MessengerType messengerType  = MessengerType.lookup(config.get(ConfigConstants.type));
+            messenger = messengerType.of(config);
+        } catch (IllegalArgumentException e) {
+            messenger = new BlackholeMessenger(config);
+            logger.warn("Could not find requested logger with type: '"+config.get(ConfigConstants.type)+"'. returning blackhole logger as default.");
+            logger.warn("Note: Config provided was:["+lineConfig+"] !!!");
         }
-        //todo: look at some nice pattern for creation.
+
         messenger.start();
         logger.info("Logger started successfully!");
         cache.put(lineConfig, messenger);

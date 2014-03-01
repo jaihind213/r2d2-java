@@ -55,7 +55,7 @@ public class LineConfigParser {
           throw new ConfigException("Messenger type not specified in config string");
         }
         try {
-            MessengerType.valueOf(type);
+            MessengerType.lookup(type);
         } catch (IllegalArgumentException e) {
             throw new ConfigException("Messenger type specified is invalid, in config string");
         }
